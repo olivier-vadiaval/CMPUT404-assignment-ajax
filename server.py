@@ -22,7 +22,7 @@
 
 
 import flask
-from flask import Flask, request
+from flask import Flask, request, redirect
 import json
 app = Flask(__name__)
 app.debug = True
@@ -74,12 +74,23 @@ def flask_post_json():
 @app.route("/")
 def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
-    return None
+    return redirect("http://127.0.0.1:5000/static/index.html")
 
 @app.route("/entity/<entity>", methods=['POST','PUT'])
 def update(entity):
     '''update the entities via this interface'''
-    return None
+    # return None
+    data = flask_post_json()
+    try:
+        if myWorld.get(entity) != {}:
+            for key in data[entity].keys():
+                myWorld.update(entity, key, data[entity][key])
+        else:
+            myWorld.set(entity, data)
+
+        return json.dumps(myWorld.world()), 200
+    except:
+        return '', 500
 
 @app.route("/world", methods=['POST','GET'])    
 def world():
