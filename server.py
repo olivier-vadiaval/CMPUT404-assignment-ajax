@@ -88,14 +88,14 @@ def update(entity):
         else:
             myWorld.set(entity, data)
 
-        return json.dumps(myWorld.world()), 200
+        return json.dumps(data), 200
     except:
         return '', 500
 
 @app.route("/world", methods=['POST','GET'])    
 def world():
     '''you should probably return the world here'''
-    return None
+    return json.dumps(myWorld.world()), 200
 
 @app.route("/entity/<entity>")    
 def get_entity(entity):
