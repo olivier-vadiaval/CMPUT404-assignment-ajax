@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 # Copyright 2013 Abram Hindle
+# Copyright 2021 Olivier Vadiavaloo
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,9 +45,35 @@ class World:
 
     def set(self, entity, data):
         self.space[entity] = data
+        self.notify_all(entity, data)
+
+    #  The methods notify_all, add_listener, get_listener, clear_listener, clear
+    #  were obtained the course examples on the cmput404-slides repository.
+    #
+    #   Copyright 2013 Abram Hindle
+    #   Copyright 2019 Hazel Victoria Campbell
+    #
+    #   Source:
+    #       https://github.com/uofa-cmput404/cmput404-slides/blob/master/examples/ObserverExampleAJAX/server.py
+    #
+    #   Accessed November 2, 2021
+    #
+    def notify_all(self, entity, data):
+        for listener in self.listeners:
+            self.listeners[listener][entity] = data
+
+    def add_listener(self, listener_name):
+        self.listeners[listener_name] = dict()
+
+    def get_listener(self, listener_name):
+        return self.listeners.get(listener_name)
+
+    def clear_listener(self, listener_name):
+        self.listeners[listener_name] = dict()
 
     def clear(self):
         self.space = dict()
+        self.listeners = dict()
 
     def get(self, entity):
         return self.space.get(entity,dict())
