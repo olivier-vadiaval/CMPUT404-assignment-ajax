@@ -2,6 +2,7 @@ CMPUT404-assignment-ajax
 ==============================
 
 CMPUT404-assignment-ajax
+#### Olivier Vadiavaloo
 
 See requirements.org (plain-text) for a description of the project.
 
