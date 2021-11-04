@@ -24,7 +24,7 @@
 
 import flask
 from flask import Flask, request, redirect, send_from_directory
-import json
+import json, copy
 
 app = Flask(__name__)
 app.debug = True
@@ -64,7 +64,7 @@ class World:
             self.listeners[listener][entity] = data
 
     def add_listener(self, listener_name):
-        self.listeners[listener_name] = dict()
+        self.listeners[listener_name] = copy.deepcopy(self.space)
 
     def get_listener(self, listener_name):
         return self.listeners.get(listener_name)
