@@ -49,15 +49,15 @@ class World:
         self.notify_all(entity, data)
 
     #  The methods notify_all, add_listener, get_listener, clear_listener, clear
-    #  were obtained the course examples on the cmput404-slides repository.
+    #  were obtained from the course examples in the cmput404-slides repository.
     #
-    #   Copyright 2013 Abram Hindle
-    #   Copyright 2019 Hazel Victoria Campbell
+    #  Copyright 2013 Abram Hindle
+    #  Copyright 2019 Hazel Victoria Campbell
     #
-    #   Source:
-    #       https://github.com/uofa-cmput404/cmput404-slides/blob/master/examples/ObserverExampleAJAX/server.py
+    #  Source:
+    #      https://github.com/uofa-cmput404/cmput404-slides/blob/master/examples/ObserverExampleAJAX/server.py
     #
-    #   Accessed November 2, 2021
+    #  Accessed November 2, 2021
     #
     def notify_all(self, entity, data):
         for listener in self.listeners:
@@ -118,6 +118,28 @@ def update(entity):
         return json.dumps(data), 200
     except:
         return '', 500
+
+#  The methods get_listener and add_listener were obtained from
+#  the course examples on the cmput404-slides repository.
+#
+#  Copyright 2013 Abram Hindle
+#  Copyright 2019 Hazel Victoria Campbell
+#
+#  Source:
+#      https://github.com/uofa-cmput404/cmput404-slides/blob/master/examples/ObserverExampleAJAX/server.py
+#
+#  Accessed November 2, 2021
+#
+@app.route("/listener/<entity>", methods=['PUT', 'POST'])
+def add_listener(entity):
+    myWorld.add_listener(entity)
+    return json.dumps(dict())
+
+@app.route("/listener/<entity>", methods=['GET'])
+def get_listener(entity):
+    v = myWorld.get_listener(entity)
+    myWorld.clear_listener(entity)
+    return json.dumps(v)
 
 @app.route("/world", methods=['POST','GET'])    
 def world():

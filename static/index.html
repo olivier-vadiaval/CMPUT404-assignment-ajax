@@ -61,6 +61,25 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
 
 world = {};
 
+//Register listener
+//Derived from course examples from the cmput404-slides repository.
+//
+//Copyright 2013 Abram Hindle
+//Copyright 2019 Hazel Victoria Campbell
+//
+//Source:
+//   https://github.com/uofa-cmput404/cmput404-slides/blob/master/examples/ObserverExampleAJAX/server.py
+//
+//Accessed November 2, 2021
+listener_id = Math.floor(20000000 * Math.random());
+function register(id) {
+    sendJSONXMLHTTPRequest(
+        'listener/' + id,
+        null,
+        function callback() {}  // empty function
+    )
+}
+
 //XXX: TODO Make this prettier!
 function drawCircle(context,entity) {
     with(context) {
@@ -280,7 +299,10 @@ function update() {
         if (xhr.readyState==4) {
             try {
                 if (xhr.status==200) {
-                    world = JSON.parse(xhr.response);
+                    var updates = JSON.parse(xhr.response);
+                    for (var key in updates) {
+                        world[key] = updates[key];
+                    }
                     drawNextFrame();
                 }
             } 
@@ -290,7 +312,7 @@ function update() {
         }
     };
 
-    xhr.open('GET', '../world', true);
+    xhr.open('GET', '../listener/' + listener_id, true);
     xhr.setRequestHeader('Accept', 'application/json; charset=UTF-8');
     xhr.send(null);
 }
