@@ -102,7 +102,7 @@ def flask_post_json():
 @app.route("/")
 def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
-    return redirect("http://127.0.0.1:5000/static/index.html")
+    return redirect("/static/index.html")
 
 @app.route("/static/index.html")
 def serve_index():
