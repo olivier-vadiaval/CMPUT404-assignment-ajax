@@ -53,7 +53,7 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
     //XXX: set the mimetype and the accept headers!
     // Remember to use application/json !
     xhr.open('POST', url, true);
-    xhr.setRequestHeader('Accept', 'application/json; charset=utf-8');
+    xhr.setRequestHeader('Accept', 'application/json;charset=utf-8');
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     xhr.send(JSON.stringify(objects));
 }
@@ -74,11 +74,12 @@ world = {};
 listener_id = Math.floor(20000000 * Math.random());
 function register(id) {
     sendJSONXMLHTTPRequest(
-        'listener/' + id,
+        '../listener/' + id,
         null,
         function callback() {}  // empty function
     )
 }
+register(listener_id);
 
 //XXX: TODO Make this prettier!
 function drawCircle(context,entity) {
@@ -313,7 +314,7 @@ function update() {
     };
 
     xhr.open('GET', '../listener/' + listener_id, true);
-    xhr.setRequestHeader('Accept', 'application/json; charset=UTF-8');
+    xhr.setRequestHeader('Accept', 'application/json;charset=UTF-8');
     xhr.send(null);
 }
 
